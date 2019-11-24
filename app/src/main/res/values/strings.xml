@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">COLORS</string>
+    <string name="tab_text_1">Analogous</string>
+    <string name="tab_text_2">Monochromatic</string>
+    <string name="tab_text_3">Triatic</string>
+</resources>
