@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     final String TAG = "MainActivityTag";
     private static final int RECORD_REQUEST_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
-    public static final int PICK_IMAGE = 1;
+    public static final int PICK_IMAGE = 103;
     private Bitmap bitmap;
 
 
@@ -58,25 +60,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Button tabButton = (Button) findViewById(R.id.takePictureButton);
-        if (checkPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            tabButton.setVisibility(View.VISIBLE);
-        } else {
-            tabButton.setVisibility(View.INVISIBLE);
-            makeRequest(Manifest.permission.CAMERA);
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Button tabButton = (Button) findViewById(R.id.takePictureButton);
+//        if (checkPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+//            tabButton.setVisibility(View.VISIBLE);
+//        } else {
+//            tabButton.setVisibility(View.INVISIBLE);
+//            makeRequest(Manifest.permission.CAMERA);
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
-            bitmap = (Bitmap) data.getExtras().get("data");
-            Intent intent = new Intent(MainActivity.this, PaletteActivity.class);
-            intent.putExtra("bitmap", bitmap);
-            startActivity(intent);
+        if(resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case CAMERA_REQUEST_CODE: {
+                    bitmap = (Bitmap) data.getExtras().get("data");
+                    Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                    intent.putExtra("typeOfEntry", "CAMERA");
+                    intent.putExtra("bitmap", bitmap);
+
+                    startActivity(intent);
+                    break;
+                }
+                case PICK_IMAGE: {
+                    Uri selectedImage = data.getData();
+                    Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                    intent.putExtra("selectedImage", selectedImage);
+                    intent.putExtra("typeOfEntry", "GALLERY");
+                    startActivity(intent);
+                    break;
+                }
+            }
         }
     }
 
