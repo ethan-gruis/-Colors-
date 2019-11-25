@@ -18,7 +18,8 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity {
     final String TAG = "MainActivityTag";
     private static final int RECORD_REQUEST_CODE = 101;
-    private final int CAMERA_REQUEST_CODE = 102;
+    private static final int CAMERA_REQUEST_CODE = 102;
+    public static final int PICK_IMAGE = 1;
     private Bitmap bitmap;
 
 
@@ -26,16 +27,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button tabButton = (Button) findViewById(R.id.launchTabButton);
+        Button takePictureButton = (Button) findViewById(R.id.takePictureButton);
+        Button uploadImageButton = (Button) findViewById(R.id.chooseImageButton);
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA_REQUEST_CODE);
 
-        tabButton.setOnClickListener(new View.OnClickListener() {
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, CAMERA_REQUEST_CODE);
+            }
+        });
+
+        uploadImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
             }
         });
 
@@ -51,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Button tabButton = (Button) findViewById(R.id.launchTabButton);
+        Button tabButton = (Button) findViewById(R.id.takePictureButton);
         if (checkPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             tabButton.setVisibility(View.VISIBLE);
         } else {

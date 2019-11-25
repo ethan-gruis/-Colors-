@@ -7,13 +7,25 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/launchTabButton"
+        android:id="@+id/takePictureButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Click here to go to tab!"
+        android:text="Click Here to Take a Picture"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.88" />
+        app:layout_constraintVertical_bias="0.84000003" />
+
+    <Button
+        android:id="@+id/chooseImageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click here to upload an image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/takePictureButton"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
