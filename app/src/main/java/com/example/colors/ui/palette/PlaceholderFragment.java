@@ -1,5 +1,6 @@
 package com.example.colors.ui.palette;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

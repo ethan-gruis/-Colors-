@@ -1,6 +1,7 @@
 package com.example.colors.ui.palette;
 
 import android.content.Context;
+import android.net.Uri;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -43,4 +44,5 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Show 2 total pages.
         return 3;
     }
+
 }

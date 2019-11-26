@@ -14,8 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ImageActivity extends AppCompatActivity {
+import java.net.URI;
+import java.net.URL;
 
+public class ImageActivity extends AppCompatActivity {
+    protected Uri selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,27 +29,30 @@ public class ImageActivity extends AppCompatActivity {
         Button startPaletteButton = (Button) findViewById(R.id.paletteButton);
         String entry = extras.getString("typeOfEntry");
         Toast.makeText(this, entry, Toast.LENGTH_SHORT).show();
-        switch(entry) {
-            case "CAMERA":
-                Bitmap bitmap = (Bitmap) extras.getParcelable("bitmap");
-                image.setImageBitmap(bitmap);
-                break;
-            case "GALLERY":
-                Uri selectedImage = (Uri) extras.getParcelable("selectedImage");
-                image.setImageURI(selectedImage);
-                break;
-            default:
-                Toast.makeText(this, "ERROR: Image not loaded", Toast.LENGTH_SHORT).show();
-                break;
-        }
 
-
+        // both options (CAMERA and GALLERY) now pass a URI object
+        selectedImage = (Uri) extras.getParcelable("selectedImage");
+        image.setImageURI(selectedImage);
+//        switch(entry) {
+//            case "CAMERA":
+//                Bitmap bitmap = (Bitmap) extras.getParcelable("bitmap");
+//                image.setImageBitmap(bitmap);
+//                break;
+//            case "GALLERY":
+//                Uri selectedImage = (Uri) extras.getParcelable("selectedImage");
+//                image.setImageURI(selectedImage);
+//                break;
+//            default:
+//                Toast.makeText(this, "ERROR: Image not loaded", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
 
 
         startPaletteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ImageActivity.this, PaletteActivity.class);
+                intent.putExtra("imageUri", selectedImage.toString());
                 startActivity(intent);
             }
         });
