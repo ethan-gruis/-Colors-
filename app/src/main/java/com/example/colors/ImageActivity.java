@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.net.URI;
 import java.net.URL;
+import java.util.List;
 
 public class ImageActivity extends AppCompatActivity {
     protected Uri selectedImage;
@@ -62,5 +63,9 @@ public class ImageActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void receivedPropertiesList(List<String> list) {
+        List<String> imageProperties = list;
+        Log.d(TAG,imageProperties.toString());
     }
 }

@@ -3,7 +3,6 @@
  * Sources:
  * https://android.jlelse.eu/androids-new-image-capture-from-a-camera-using-file-provider-dd178519a954
  * https://stackoverflow.com/questions/30896130/fileprovider-crash-npe-attempting-to-invoke-xmlresourceparser-on-a-null-string
- *
  */
 
 package com.example.colors;
@@ -115,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){

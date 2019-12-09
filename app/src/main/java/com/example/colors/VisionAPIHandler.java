@@ -124,7 +124,7 @@ public class VisionAPIHandler  {
 
         protected void onPostExecute(String result) {
             Log.d(TAG,result);
-            propertiesList = getListOfProperties(splitImageProperties(result));
+            imageActivity.receivedPropertiesList(getListOfProperties(splitImageProperties(result)));
 //            Log.d(TAG,)
 //            visionAPIData.setText(result);
 //            imageUploadProgress.setVisibility(View.INVISIBLE);
