@@ -115,14 +115,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private int checkPermission(String permission) {
-        return ContextCompat.checkSelfPermission(this, permission);
-    }
-
-    private void makeRequest(String permission) {
-        ActivityCompat.requestPermissions(this, new String[]{permission}, RECORD_REQUEST_CODE);
-    }
-
     private boolean checkCameraHardware(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
             // this device has a camera

@@ -33,6 +33,8 @@ public class ImageActivity extends AppCompatActivity {
         // both options (CAMERA and GALLERY) now pass a URI object
         selectedImage = (Uri) extras.getParcelable("selectedImage");
         image.setImageURI(selectedImage);
+        VisionAPIHandler visionAPIHandler = new VisionAPIHandler(this);
+        visionAPIHandler.callVisionAPI(selectedImage);
 //        switch(entry) {
 //            case "CAMERA":
 //                Bitmap bitmap = (Bitmap) extras.getParcelable("bitmap");
