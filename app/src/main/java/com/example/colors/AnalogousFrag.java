@@ -1,11 +1,13 @@
 package com.example.colors;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 
@@ -64,8 +66,43 @@ public class AnalogousFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_analogous, container, false);
+
+        ImageView baseImage = (ImageView) rootView.findViewById(R.id.colorBase);
+        ImageView color1 = (ImageView) rootView.findViewById(R.id.color);
+        ImageView color2 = (ImageView) rootView.findViewById(R.id.color2);
+        ImageView color3 = (ImageView) rootView.findViewById(R.id.color3);
+        ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
+
+        int r = 150;
+        int g = 100;
+        int b = 40;
+        baseImage.setBackgroundColor(Color.rgb(r, g, b));
+        float[] baseHSV = new float[3];
+        Color.RGBToHSV(r, g, b, baseHSV);
+        float[] hsv = baseHSV;
+
+        if (hsv[0] <= 280) {
+            hsv[0] += 20;
+            color1.setBackgroundColor(Color.HSVToColor(hsv));
+            hsv[0] += 20;
+            color2.setBackgroundColor(Color.HSVToColor(hsv));
+            hsv[0] += 20;
+            color3.setBackgroundColor(Color.HSVToColor(hsv));
+            hsv[0] += 20;
+            color4.setBackgroundColor(Color.HSVToColor(hsv));
+        } else if (hsv[0] > 280) {
+            hsv[0] -= 20;
+            color1.setBackgroundColor(Color.HSVToColor(hsv));
+            hsv[0] -= 20;
+            color2.setBackgroundColor(Color.HSVToColor(hsv));
+            hsv[0] -= 20;
+            color3.setBackgroundColor(Color.HSVToColor(hsv));
+            hsv[0] -= 20;
+            color4.setBackgroundColor(Color.HSVToColor(hsv));
+        }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_analogous, container, false);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

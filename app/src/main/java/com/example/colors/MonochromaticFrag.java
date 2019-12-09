@@ -78,49 +78,61 @@ public class MonochromaticFrag extends Fragment {
         ImageView color3 = (ImageView) rootView.findViewById(R.id.color3);
         ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
 
-        int r = 0;
-        int g = 0;
-        int b = 255;
-        baseImage.setBackgroundColor(Color.rgb(r, g, b));
-        float[] baseHSV = new float[3];
+        final int r = 75;
+        final int g = 255;
+        final int b = 100;
+        float[] hsv = new float[3];
 
-        Color.RGBToHSV(r, g, b, baseHSV);
-        // hsv[0] == hue, hsv[1] == saturation, hsv[2] == value
-        float[] hsv = baseHSV;
+        Color.RGBToHSV(r, g, b, hsv);
+        baseImage.setBackgroundColor(Color.HSVToColor(hsv));
+//        float[] hsv = new float[3];
+
+
+
+       // Toast.makeText(getContext(), baseHSV[0] + "," + baseHSV[1] + "," + baseHSV[2], Toast.LENGTH_LONG).show();
+         //hsv[0] == hue, hsv[1] == saturation, hsv[2] == value
         // case 1
         if(hsv[1] <= .70 && hsv[2] <= .50) {
+            //Toast.makeText(getContext(), "Case 1: " + hsv[0] + "," + hsv[1] + "," + hsv[2], Toast.LENGTH_LONG).show();
+
             // color 1
             hsv[2] += .30;
-            color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            color1.setBackgroundColor(Color.HSVToColor(hsv));
+            Toast.makeText(getContext(), "Color 1: " + r + "," + g + "," + b, Toast.LENGTH_LONG).show();
+
             hsv[2] -= .30;
             // color 2
             hsv[1] += .30;
-            color2.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            color2.setBackgroundColor(Color.HSVToColor(hsv));
             hsv[1] -= .30;
             // color 3
             hsv[2] += .50;
-            color3.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            color3.setBackgroundColor(Color.HSVToColor(hsv));
             // color 4
             hsv[1] += .30;
-            color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            color4.setBackgroundColor(Color.HSVToColor(hsv));
 
         } else if(hsv[1] > .70 && hsv[2] > .50) {
+            //Toast.makeText(getContext(), "Case 2: " + hsv[0] + "," + hsv[1] + "," + hsv[2], Toast.LENGTH_LONG).show();
             // color 1
-            hsv[2] -= .30;
-            color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
-            hsv[2] += .30;
+            hsv[2] -= .30f;
+            color1.setBackgroundColor(Color.HSVToColor(hsv));
+            Toast.makeText(getContext(), "Color 1: " + r + "," + g + "," + b, Toast.LENGTH_LONG).show();
+            hsv[2] += .30f;
             // color 2
-            hsv[1] -= .30;
-            color2.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
-            hsv[1] += .30;
+            hsv[1] -= .30f;
+            color2.setBackgroundColor(Color.HSVToColor(hsv));
+            hsv[1] += .30f;
             // color 3
-            hsv[2] -= .50;
-            color3.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[2] -= .50f;
+            color3.setBackgroundColor(Color.HSVToColor(hsv));
             // color 4
             hsv[1] -= .30;
-            color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            color4.setBackgroundColor(Color.HSVToColor(hsv));
 
         } else if(hsv[1] <= .70 && hsv[2] > .50) {
+            Toast.makeText(getContext(), "Case 3: " + hsv[0] + "," + hsv[1] + "," + hsv[2], Toast.LENGTH_LONG).show();
+
             // color 1
             hsv[2] -= .30;
             color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
@@ -136,6 +148,7 @@ public class MonochromaticFrag extends Fragment {
             hsv[1] += .30;
             color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
         } else if(hsv[1] > .70 && hsv[2] <= .50) {
+            Toast.makeText(getContext(), "Case 4: " + hsv[0] + "," + hsv[1] + "," + hsv[2], Toast.LENGTH_SHORT).show();
             // color 1
             hsv[2] += .30;
             color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
