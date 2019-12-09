@@ -18,8 +18,8 @@ public class PaletteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
 
-        Bundle extras = getIntent().getExtras();
-        Uri selectedImage = (Uri) extras.getParcelable("selectedImage");
+//        Bundle extras = getIntent().getExtras();
+//        Uri selectedImage = (Uri) extras.getParcelable("selectedImage");
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         //sectionsPagerAdapter.setUri(selectedImage);

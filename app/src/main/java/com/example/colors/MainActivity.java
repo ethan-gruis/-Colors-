@@ -11,11 +11,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -70,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(!checkCameraHardware(this)) {
+        if (!checkCameraHardware(this)) {
             Toast.makeText(this, "Your device doesn't support this app", Toast.LENGTH_SHORT).show();
             Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-            homeIntent.addCategory( Intent.CATEGORY_HOME );
+            homeIntent.addCategory(Intent.CATEGORY_HOME);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
         }
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE: {
                     Uri selectedImage = Uri.fromFile(new File(imageFilePath));
@@ -104,11 +107,24 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
                 case PICK_IMAGE: {
-                    Uri selectedImage = data.getData();
-                    Intent intent = new Intent(MainActivity.this, ImageActivity.class);
-                    intent.putExtra("selectedImage", selectedImage);
-                    intent.putExtra("typeOfEntry", "GALLERY");
-                    startActivity(intent);
+//                    Uri selectedImage = data.getData();
+//                    Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+//                    intent.putExtra("selectedImage", selectedImage);
+//                    intent.putExtra("typeOfEntry", "GALLERY");
+//                    startActivity(intent);
+                    try {
+                                Uri selectedImageUri = data.getData();
+                                // Get the path from the Uri
+                                final String path = getPathFromURI(selectedImageUri);
+                                if (path != null) {
+                                    File f = new File(path);
+                                    selectedImageUri = Uri.fromFile(f);
+                                }
+                                Log.d(TAG,path);
+                                // Set the image in ImageView
+                    } catch (Exception e) {
+                        Log.e("FileSelectorActivity", "File select error", e);
+                    }
                     break;
                 }
             }
@@ -117,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private boolean checkCameraHardware(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             // this device has a camera
             return true;
         } else {
@@ -125,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
     private File createImageFile() throws IOException {
         String timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHmmss",
@@ -145,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
     private void openCameraIntent() {
         Intent pictureIntent = new Intent(
                 MediaStore.ACTION_IMAGE_CAPTURE);
-        if(pictureIntent.resolveActivity(getPackageManager()) != null){
+        if (pictureIntent.resolveActivity(getPackageManager()) != null) {
             //Create a file to store the image
             File photoFile = null;
             try {
@@ -163,4 +180,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    public String getPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
 }
+

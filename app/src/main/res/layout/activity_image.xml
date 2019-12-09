@@ -7,24 +7,52 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/colorImage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/paletteButton"
+        android:id="@+id/parentImage"
+        android:layout_width="299dp"
+        android:layout_height="497dp"
+        app:layout_constraintBottom_toTopOf="@+id/colorImage1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/paletteButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go to Palette"
+    <ImageView
+        android:id="@+id/colorImage1"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/colorImage2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/parentImage"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/colorImage2"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/colorImage3"
+        app:layout_constraintStart_toEndOf="@+id/colorImage1"
+        app:layout_constraintTop_toBottomOf="@+id/parentImage"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/colorImage3"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/colorImage4"
+        app:layout_constraintStart_toEndOf="@+id/colorImage2"
+        app:layout_constraintTop_toBottomOf="@+id/parentImage"
+        app:srcCompat="@android:color/transparent" />
+
+    <ImageView
+        android:id="@+id/colorImage4"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorImage"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toEndOf="@+id/colorImage3"
+        app:layout_constraintTop_toBottomOf="@+id/parentImage"
+        app:srcCompat="@android:color/transparent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

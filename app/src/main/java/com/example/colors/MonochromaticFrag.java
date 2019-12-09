@@ -1,6 +1,7 @@
 package com.example.colors;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 
 /**
@@ -60,21 +63,104 @@ public class MonochromaticFrag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_monochromatic, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_monochromatic, container, false);
+
+        ImageView baseImage = (ImageView) rootView.findViewById(R.id.colorBase);
+        ImageView color1 = (ImageView) rootView.findViewById(R.id.color);
+        ImageView color2 = (ImageView) rootView.findViewById(R.id.color2);
+        ImageView color3 = (ImageView) rootView.findViewById(R.id.color3);
+        ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
+
+        int r = 0;
+        int g = 0;
+        int b = 255;
+        baseImage.setBackgroundColor(Color.rgb(r, g, b));
+        float[] baseHSV = new float[3];
+
+        Color.RGBToHSV(r, g, b, baseHSV);
+        // hsv[0] == hue, hsv[1] == saturation, hsv[2] == value
+        float[] hsv = baseHSV;
+        // case 1
+        if(hsv[1] <= .70 && hsv[2] <= .50) {
+            // color 1
+            hsv[2] += .30;
+            color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[2] -= .30;
+            // color 2
+            hsv[1] += .30;
+            color2.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[1] -= .30;
+            // color 3
+            hsv[2] += .50;
+            color3.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            // color 4
+            hsv[1] += .30;
+            color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+
+        } else if(hsv[1] > .70 && hsv[2] > .50) {
+            // color 1
+            hsv[2] -= .30;
+            color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[2] += .30;
+            // color 2
+            hsv[1] -= .30;
+            color2.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[1] += .30;
+            // color 3
+            hsv[2] -= .50;
+            color3.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            // color 4
+            hsv[1] -= .30;
+            color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+
+        } else if(hsv[1] <= .70 && hsv[2] > .50) {
+            // color 1
+            hsv[2] -= .30;
+            color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[2] += .30;
+            // color 2
+            hsv[1] += .30;
+            color2.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[1] -= .30;
+            // color 3
+            hsv[2] -= .50;
+            color3.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            // color 4
+            hsv[1] += .30;
+            color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+        } else if(hsv[1] > .70 && hsv[2] <= .50) {
+            // color 1
+            hsv[2] += .30;
+            color1.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[2] -= .30;
+            // color 2
+            hsv[1] -= .30;
+            color2.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            hsv[1] += .30;
+            // color 3
+            hsv[2] += .50;
+            color3.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+            // color 4
+            hsv[1] -= .30;
+            hsv[2] += .50;
+            color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
+        }
+        return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
 
     @Override
