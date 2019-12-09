@@ -1,8 +1,6 @@
 package com.example.colors;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
@@ -55,6 +53,7 @@ public class VisionAPIHandler  {
     private static final String CLOUD_VISION_API_KEY = "AIzaSyDmfCtWQSrC7z8RPGARSwgvcdxSQ-SmS44";
     static final String TAG = "VisionAPI";
     private List<AnnotateImageRequest> annotateImageRequests;
+    public List<String> propertiesList;
 
     ImageActivity imageActivity; // for callbacks, because our code
     // is going to run asynchronously
@@ -62,8 +61,7 @@ public class VisionAPIHandler  {
     public VisionAPIHandler(ImageActivity imageActivity){
         this.imageActivity = imageActivity;
     }
-    public Image getImagePath(Uri imageUri){
-
+    public Image convertToImage(Uri imageUri){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Bitmap bitmap = BitmapFactory.decodeFile(imageUri.getPath());
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -75,7 +73,7 @@ public class VisionAPIHandler  {
     }
 
     public void callVisionAPI(Uri imageUri){
-        Image image = getImagePath(imageUri);
+        Image image = convertToImage(imageUri);
 
         Feature desiredFeature = new Feature();
         desiredFeature.setType("IMAGE_PROPERTIES");
@@ -89,6 +87,10 @@ public class VisionAPIHandler  {
         VisionAPIHandlerAsyncTask visionAPIHandlerAsyncTask = new VisionAPIHandlerAsyncTask();
         visionAPIHandlerAsyncTask.execute(imageUri);
     }
+    public List returnList(){
+        return propertiesList;
+    }
+
 
     class VisionAPIHandlerAsyncTask extends AsyncTask<Object,Void,String>{
         @Override
@@ -122,22 +124,34 @@ public class VisionAPIHandler  {
 
         protected void onPostExecute(String result) {
             Log.d(TAG,result);
+            propertiesList = getListOfProperties(splitImageProperties(result));
+//            Log.d(TAG,)
 //            visionAPIData.setText(result);
 //            imageUploadProgress.setVisibility(View.INVISIBLE);
         }
     }
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-
         AnnotateImageResponse imageResponses = response.getResponses().get(0);
-
-        List<EntityAnnotation> entityAnnotations;
 
         String message = "";
         ImageProperties imageProperties = imageResponses.getImagePropertiesAnnotation();
         message = getImageProperty(imageProperties);
+
         return message;
     }
+    private String[] splitImageProperties(String message){
+        String[] lines = message.split("\\s*\\r?\\n\\s*");
+        for (String line : lines) {
+            Log.d(TAG, "getListOfProperties: " + line);
+        }
+        return lines;
+    }
 
+    public List getListOfProperties(String[] lines){
+        List<String> list = new ArrayList<>(lines.length);
+        list.addAll(Arrays.asList(lines));
+        return list;
+    }
     private String getImageProperty(ImageProperties imageProperties) {
         String message = "";
         DominantColorsAnnotation colors = imageProperties.getDominantColors();
