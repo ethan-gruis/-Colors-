@@ -54,6 +54,7 @@ public class VisionAPIHandler  {
     static final String TAG = "VisionAPI";
     private List<AnnotateImageRequest> annotateImageRequests;
     public List<String> propertiesList;
+    List<PictureProperties> picturePropertiesList;
 
     ImageActivity imageActivity; // for callbacks, because our code
     // is going to run asynchronously
@@ -92,9 +93,9 @@ public class VisionAPIHandler  {
     }
 
 
-    class VisionAPIHandlerAsyncTask extends AsyncTask<Object,Void,String>{
+    class VisionAPIHandlerAsyncTask extends AsyncTask<Object,Void,List<PictureProperties>>{
         @Override
-        protected String doInBackground(Object... params) {
+        protected List<PictureProperties> doInBackground(Object... params) {
             try {
                 HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
                 JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -113,18 +114,20 @@ public class VisionAPIHandler  {
                 annotateRequest.setDisableGZipContent(true);
                 BatchAnnotateImagesResponse response = annotateRequest.execute();
 
-                return convertResponseToString(response);
+                //return convertResponseToString(response);
+                return convertResponseToPicturePropertiesList(response);
             } catch (GoogleJsonResponseException e) {
                 Log.d(TAG, "failed to make API request because " + e.getContent());
             } catch (IOException e) {
                 Log.d(TAG, "failed to make API request because of other IOException " + e.getMessage());
             }
-            return "Cloud Vision API request failed. Check logs for details.";
+            return null;
         }
 
-        protected void onPostExecute(String result) {
-            Log.d(TAG,result);
-            imageActivity.receivedPropertiesList(getListOfProperties(splitImageProperties(result)));
+        protected void onPostExecute(List<PictureProperties> result) {
+            //imageActivity.receivedPropertiesList(getListOfProperties(splitImageProperties(result)));
+            imageActivity.receivedPicturePropertiesList(result);
+
 //            Log.d(TAG,)
 //            visionAPIData.setText(result);
 //            imageUploadProgress.setVisibility(View.INVISIBLE);
@@ -139,6 +142,15 @@ public class VisionAPIHandler  {
 
         return message;
     }
+    private List<PictureProperties> convertResponseToPicturePropertiesList(BatchAnnotateImagesResponse response) {
+        AnnotateImageResponse imageResponses = response.getResponses().get(0);
+
+        List<PictureProperties> list = null;
+        ImageProperties imageProperties = imageResponses.getImagePropertiesAnnotation();
+        list = getImagePropertyList(imageProperties);
+
+        return list;
+    }
     private String[] splitImageProperties(String message){
         String[] lines = message.split("\\s*\\r?\\n\\s*");
         for (String line : lines) {
@@ -152,14 +164,29 @@ public class VisionAPIHandler  {
         list.addAll(Arrays.asList(lines));
         return list;
     }
+
     private String getImageProperty(ImageProperties imageProperties) {
         String message = "";
         DominantColorsAnnotation colors = imageProperties.getDominantColors();
         for (ColorInfo color : colors.getColors()) {
             message = message + "" + color.getPixelFraction() + " - " + color.getColor().getRed() + " - " + color.getColor().getGreen() + " - " + color.getColor().getBlue();
             message = message + "\n";
+//            PictureProperties pictureProperties = new PictureProperties(color.getPixelFraction(),color.getColor().getRed(),color.getColor().getBlue(),color.getColor().getGreen());
+//            picturePropertiesList.add(pictureProperties);
         }
         return message;
+    }
+    private List<PictureProperties> getImagePropertyList(ImageProperties imageProperties) {
+        List<PictureProperties> list = new ArrayList<>();
+        DominantColorsAnnotation colors = imageProperties.getDominantColors();
+        for (ColorInfo color : colors.getColors()) {
+            PictureProperties pictureProperties = new PictureProperties(color.getPixelFraction(),color.getColor().getRed(),color.getColor().getBlue(),color.getColor().getGreen());
+            //Log.d(TAG, pictureProperties.toString());
+            if(pictureProperties!=null) {
+                list.add(pictureProperties);
+            }
+        }
+        return list;
     }
 }
 
