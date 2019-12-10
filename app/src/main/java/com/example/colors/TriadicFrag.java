@@ -1,5 +1,8 @@
 package com.example.colors;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 /**
@@ -41,6 +46,33 @@ public class TriadicFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_palette, container, false);
+
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+//set icon
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+//set title
+                        .setTitle("Are you sure to Exit")
+//set message
+                        .setMessage("Exiting will bring you back to home")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(getActivity(),MainActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
+            }
+        });
 
         ImageView baseImage = (ImageView) rootView.findViewById(R.id.colorBase);
         ImageView color1 = (ImageView) rootView.findViewById(R.id.color);

@@ -1,10 +1,17 @@
 package com.example.colors;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +19,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 
 /**
@@ -50,6 +61,7 @@ public class MonochromaticFrag extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,8 +83,6 @@ public class MonochromaticFrag extends Fragment {
         String color3HexText = "";
         String color4HexText = "";
         doColorMath(rootView, r, g, b);
-        return rootView;
-    }
 //        float[] hsv = new float[3];
 //        int[] rgb = {0, 0, 0, 0};
 //        Color.RGBToHSV(r, g, b, hsv);
@@ -236,10 +246,42 @@ public class MonochromaticFrag extends Fragment {
 //        return rootView;
 //    }
 
+
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+//set icon
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+//set title
+                        .setTitle("Are you sure to Exit")
+//set message
+                        .setMessage("Exiting will bring you back to home")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(getActivity(),MainActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        })
+                        .show();
+                }
+        });
+      
+  return rootView;
+}
+
     public void doColorMath(View rootView, int r, int g, int b) {
         ImageView baseImage = (ImageView) rootView.findViewById(R.id.colorBase);
         TextView baseHex = (TextView) rootView.findViewById(R.id.baseHex);
         String baseHexText = String.format("#%02X%02X%02X", r, g, b);
+
         float[] hsv = new float[3];
         Color.RGBToHSV(r, g, b, hsv);
         int white = setToWhite(r, g, b, hsv);
