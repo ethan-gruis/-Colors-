@@ -9,20 +9,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class ImageActivity extends AppCompatActivity implements View.OnClickListener {
     protected Uri selectedImage;
     private final String TAG = "ImageTAG";
-    private List<PictureProperties> list;
+    private List<PictureProperties> picturePropertiesList;
     protected ImageView color1;
     protected ImageView color2;
     protected ImageView color3;
     protected ImageView color4;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,11 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(ImageActivity.this, PaletteActivity.class);
+        PictureProperties pictureProperties = (PictureProperties) v.getTag();
+        Log.d(TAG, "onClick: " + pictureProperties.toString());
+        intent.putExtra("Red Value",pictureProperties.getRedValue());
+        intent.putExtra("Green Value",pictureProperties.getGreenValue());
+        intent.putExtra("Blue Value",pictureProperties.getBlueValue());
         startActivity(intent);
     }
     public void receivedPropertiesList(List<String> list) {
@@ -80,13 +89,29 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         Log.d(TAG,imageProperties.get(1));
     }
     public void receivedPicturePropertiesList(List<PictureProperties> list){
-        List<PictureProperties> pictureProperties = list;
-        String temp = Integer.toString(pictureProperties.size());
-        Log.d(TAG,temp);
-        Log.d(TAG,pictureProperties.get(1).toString());
-        color1.setBackgroundColor(Color.rgb(list.get(0).getRedValue(),list.get(1).getGreenValue(),list.get(0).getBlueValue()));
-        color2.setBackgroundColor(Color.rgb(list.get(1).getRedValue(),list.get(2).getGreenValue(),list.get(1).getBlueValue()));
-        color3.setBackgroundColor(Color.rgb(list.get(2).getRedValue(),list.get(3).getGreenValue(),list.get(2).getBlueValue()));
-        color4.setBackgroundColor(Color.rgb(list.get(3).getRedValue(),list.get(4).getGreenValue(),list.get(3).getBlueValue()));
+        picturePropertiesList = list;
+        String temp = Integer.toString(picturePropertiesList.size());
+        Log.d(TAG,"List size" + temp);
+        //Log.d(TAG,picturePropertiesList.get(1).toString());
+        Collections.sort(picturePropertiesList);
+        for(int i = 0; i < picturePropertiesList.size();i++){
+            Log.d(TAG,"Item " + i + picturePropertiesList.get(i).toString());
+        }
+
+        // Set imageView to colors
+        final int r = (int)picturePropertiesList.get(0).getRedValue();
+        final int g = (int)picturePropertiesList.get(0).getGreenValue();
+        final int b = (int)picturePropertiesList.get(0).getBlueValue();
+        float[] hsv = new float[3];
+        Color.RGBToHSV(r, g, b, hsv);
+        color1.setBackgroundColor(Color.HSVToColor(hsv));
+        color1.setTag(picturePropertiesList.get(0));
+
+        color2.setBackgroundColor(Color.rgb(list.get(1).getRedValue(),list.get(1).getGreenValue(),list.get(1).getBlueValue()));
+        color2.setTag(picturePropertiesList.get(1));
+        color3.setBackgroundColor(Color.rgb(list.get(2).getRedValue(),list.get(2).getGreenValue(),list.get(2).getBlueValue()));
+        color3.setTag(picturePropertiesList.get(2));
+        color4.setBackgroundColor(Color.rgb(list.get(3).getRedValue(),list.get(3).getGreenValue(),list.get(3).getBlueValue()));
+        color4.setTag(picturePropertiesList.get(3));
     }
 }
