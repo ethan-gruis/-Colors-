@@ -10,7 +10,7 @@
         android:id="@+id/takePictureButton"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginBottom="5dp"
         android:scaleType="fitCenter"
         android:src="@android:drawable/ic_menu_camera"
         android:text="Take a Picture"
@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
-        android:backgroundTint="@color/colorPrimary"
         android:text="upload an image"
         android:textColor="#FFFCFC"
         android:textSize="20sp"
@@ -45,16 +44,16 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="7dp"
         android:text="Welcome to "
         android:textColor="#050505"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/takePictureButton"
         app:layout_constraintEnd_toStartOf="@+id/color1"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <TextView
         android:id="@+id/textView3"
@@ -67,10 +66,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/takePictureButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.413" />
+        app:layout_constraintVertical_bias="0.407" />
 
     <TextView
         android:id="@+id/textView4"
@@ -119,4 +118,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/color2"
         app:srcCompat="@android:color/transparent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

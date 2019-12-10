@@ -58,28 +58,8 @@ public class MainActivity extends AppCompatActivity {
         Button takePictureButton = (Button) findViewById(R.id.takePictureButton);
         Button uploadImageButton = (Button) findViewById(R.id.chooseImageButton);
         ImageView color1 = (ImageView) findViewById(R.id.color1);
-        ImageView color2 = (ImageView) findViewById(R.id.color2);
-        ImageView color3 = (ImageView) findViewById(R.id.color3);
 
-        Random rand = new Random();
-        int r = rand.nextInt(256 - 1);
-        int g = rand.nextInt(256 - 1);
-        int b = rand.nextInt(256 - 1);
-        color1.setBackgroundColor(Color.rgb(r, g, b));
-        float[] baseHSV = new float[3];
-        Color.RGBToHSV(r, g, b, baseHSV);
-        float[] hsv = baseHSV;
-
-        hsv[2] += .30f;
-        // color 2
-        hsv[1] -= .30f;
-        color2.setBackgroundColor(Color.HSVToColor(hsv));
-        hsv[1] += .30f;
-        // color 3
-        hsv[2] -= .50f;
-        color3.setBackgroundColor(Color.HSVToColor(hsv));
-
-
+        scrambleUI();
 
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +95,55 @@ public class MainActivity extends AppCompatActivity {
             homeIntent.addCategory(Intent.CATEGORY_HOME);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(homeIntent);
+        }
+
+        color1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scrambleUI();
+            }
+        });
+    }
+
+    public void scrambleUI() {
+        ImageView color1 = (ImageView) findViewById(R.id.color1);
+        ImageView color2 = (ImageView) findViewById(R.id.color2);
+        ImageView color3 = (ImageView) findViewById(R.id.color3);
+        Button takePictureButton = (Button) findViewById(R.id.takePictureButton);
+        Button uploadImageButton = (Button) findViewById(R.id.chooseImageButton);
+        Random rand = new Random();
+        int r = rand.nextInt(256 - 1);
+        int g = rand.nextInt(256 - 1);
+        int b = rand.nextInt(256 - 1);
+        
+        color1.setBackgroundColor(Color.rgb(r, g, b));
+        float[] baseHSV = new float[3];
+        Color.RGBToHSV(r, g, b, baseHSV);
+        float[] hsv = baseHSV;
+
+        hsv[2] += .30f;
+        hsv[1] -= .30f;
+        color2.setBackgroundColor(Color.HSVToColor(hsv));
+        hsv[1] += .30f;
+        hsv[2] -= .50f;
+        color3.setBackgroundColor(Color.HSVToColor(hsv));
+
+        if(!setToWhite(r,g,b, baseHSV)) {
+            takePictureButton.setTextColor(Color.BLACK);
+            uploadImageButton.setTextColor(Color.BLACK);
+        } else {
+            takePictureButton.setTextColor(Color.WHITE);
+            uploadImageButton.setTextColor(Color.WHITE);
+        }
+        takePictureButton.setBackgroundColor(Color.rgb(r,g,b));
+        uploadImageButton.setBackgroundColor(Color.rgb(r,g,b));
+    }
+
+    public boolean setToWhite(int r, int g, int b, float[] hsv) {
+        if(Color.luminance(Color.rgb(r,g,b)) < 0.6) {
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -57,6 +57,63 @@ public class AnalogousFrag extends Fragment {
         ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
         TextView baseHex = (TextView) rootView.findViewById(R.id.baseHex);
 
+        createFab(rootView);
+
+        int r = (int)redValue;
+        int g = (int)greenValue;
+        int b = (int)blueValue;
+
+        baseImage.setBackgroundColor(Color.rgb(r, g, b));
+        float[] baseHSV = new float[3];
+        Color.RGBToHSV(r, g, b, baseHSV);
+        if(setToWhite(r,g,b) == 1) {
+            baseHex.setTextColor(Color.WHITE);
+        }
+        String baseHexText = String.format("#%02X%02X%02X", r, g, b);
+        baseHex.setText(baseHexText);
+        float[] hsv = baseHSV;
+        int[] rgb = new int[4];
+        boolean[] setTextWhite = {false, false, false, false};
+        int x = 1;
+        if (hsv[0] <= 280) {
+            x = 1;
+        } else {
+            x = -1;
+        }
+        hsv[0] += (20*x);
+        rgb = getRGB(hsv);
+        if(rgb[3] == 1) {
+            setTextWhite[0] = true;
+        }
+        String color1HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
+        color1.setBackgroundColor(Color.HSVToColor(hsv));
+        hsv[0] += (20*x);
+        rgb = getRGB(hsv);
+        if(rgb[3] == 1) {
+            setTextWhite[1] = true;
+        }
+        String color2HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
+        color2.setBackgroundColor(Color.HSVToColor(hsv));
+        hsv[0] += (20*x);
+        rgb = getRGB(hsv);
+        if(rgb[3] == 1) {
+            setTextWhite[2] = true;
+        }
+        String color3HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
+        color3.setBackgroundColor(Color.HSVToColor(hsv));
+        hsv[0] += (20*x);
+        rgb = getRGB(hsv);
+        if(rgb[3] == 1) {
+            setTextWhite[3] = true;
+        }
+        String color4HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
+        color4.setBackgroundColor(Color.HSVToColor(hsv));
+        setTextViews(rootView, color1HexText, color2HexText, color3HexText, color4HexText, setTextWhite);
+
+        return rootView;
+    }
+
+    public void createFab(View rootView) {
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,83 +140,6 @@ public class AnalogousFrag extends Fragment {
                         .show();
             }
         });
-
-        int r = (int)redValue;
-        int g = (int)greenValue;
-        int b = (int)blueValue;
-
-        String baseHexText = String.format("#%02X%02X%02X", r, g, b);
-        baseHex.setText(baseHexText);
-        baseImage.setBackgroundColor(Color.rgb(r, g, b));
-        float[] baseHSV = new float[3];
-        Color.RGBToHSV(r, g, b, baseHSV);
-        float[] hsv = baseHSV;
-        int[] rgb = new int[4];
-        boolean[] setTextWhite = {false, false, false, false};
-
-        if (hsv[0] <= 280) {
-            hsv[0] += 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[0] = true;
-            }
-            String color1HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color1.setBackgroundColor(Color.HSVToColor(hsv));
-            hsv[0] += 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[1] = true;
-            }
-            String color2HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color2.setBackgroundColor(Color.HSVToColor(hsv));
-            hsv[0] += 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[2] = true;
-            }
-            String color3HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color3.setBackgroundColor(Color.HSVToColor(hsv));
-            hsv[0] += 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[3] = true;
-            }
-            String color4HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color4.setBackgroundColor(Color.HSVToColor(hsv));
-            setTextViews(rootView, color1HexText, color2HexText, color3HexText, color4HexText, setTextWhite);
-        } else if (hsv[0] > 280) {
-            hsv[0] -= 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[0] = true;
-            }
-            String color1HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color1.setBackgroundColor(Color.HSVToColor(hsv));
-            hsv[0] -= 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[1] = true;
-            }
-            String color2HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color2.setBackgroundColor(Color.HSVToColor(hsv));
-            hsv[0] -= 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[2] = true;
-            }
-            String color3HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color3.setBackgroundColor(Color.HSVToColor(hsv));
-            hsv[0] -= 20;
-            rgb = getRGB(hsv);
-            if(rgb[3] == 1) {
-                setTextWhite[3] = true;
-            }
-            String color4HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
-            color4.setBackgroundColor(Color.HSVToColor(hsv));
-            setTextViews(rootView, color1HexText, color2HexText, color3HexText, color4HexText, setTextWhite);
-        }
-        // Inflate the layout for this fragment
-        return rootView;
     }
 
     public void setTextViews(View rootView, String one, String two, String three, String four, boolean[] setTextWhite) {
