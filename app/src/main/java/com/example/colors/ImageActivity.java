@@ -1,5 +1,6 @@
 package com.example.colors;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
@@ -7,8 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -26,6 +29,8 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
     protected ImageView color2;
     protected ImageView color3;
     protected ImageView color4;
+    protected ProgressBar progressBar;
+
 
 
     @Override
@@ -34,6 +39,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         Bundle extras = getIntent().getExtras();
         setContentView(R.layout.activity_image);
         ImageView image = (ImageView) findViewById(R.id.parentImage);
+
         color1 = (ImageView) findViewById(R.id.colorImage1);
         color2 = (ImageView) findViewById(R.id.colorImage2);
         color3 = (ImageView) findViewById(R.id.colorImage3);
@@ -66,12 +72,6 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("Green Value",pictureProperties.getGreenValue());
         intent.putExtra("Blue Value",pictureProperties.getBlueValue());
         startActivity(intent);
-    }
-    public void receivedPropertiesList(List<String> list) {
-        List<String> imageProperties = list;
-        String temp = Integer.toString(imageProperties.size());
-        Log.d(TAG,temp);
-        Log.d(TAG,imageProperties.get(1));
     }
     public void receivedPicturePropertiesList(List<PictureProperties> list){
         picturePropertiesList = list;

@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -88,12 +89,15 @@ public class VisionAPIHandler  {
         VisionAPIHandlerAsyncTask visionAPIHandlerAsyncTask = new VisionAPIHandlerAsyncTask();
         visionAPIHandlerAsyncTask.execute(imageUri);
     }
-    public List returnList(){
-        return propertiesList;
-    }
-
 
     class VisionAPIHandlerAsyncTask extends AsyncTask<Object,Void,List<PictureProperties>>{
+        @Override
+        protected void onPreExecute() {
+//            imageActivity.animation.start();
+            ProgressBar progressBar = imageActivity.findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
         @Override
         protected List<PictureProperties> doInBackground(Object... params) {
             try {
@@ -127,21 +131,11 @@ public class VisionAPIHandler  {
         protected void onPostExecute(List<PictureProperties> result) {
             //imageActivity.receivedPropertiesList(getListOfProperties(splitImageProperties(result)));
             imageActivity.receivedPicturePropertiesList(result);
-
-//            Log.d(TAG,)
-//            visionAPIData.setText(result);
-//            imageUploadProgress.setVisibility(View.INVISIBLE);
+            ProgressBar progressBar = imageActivity.findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.GONE);
         }
     }
-    private String convertResponseToString(BatchAnnotateImagesResponse response) {
-        AnnotateImageResponse imageResponses = response.getResponses().get(0);
 
-        String message = "";
-        ImageProperties imageProperties = imageResponses.getImagePropertiesAnnotation();
-        message = getImageProperty(imageProperties);
-
-        return message;
-    }
     private List<PictureProperties> convertResponseToPicturePropertiesList(BatchAnnotateImagesResponse response) {
         AnnotateImageResponse imageResponses = response.getResponses().get(0);
 
@@ -150,31 +144,6 @@ public class VisionAPIHandler  {
         list = getImagePropertyList(imageProperties);
 
         return list;
-    }
-    private String[] splitImageProperties(String message){
-        String[] lines = message.split("\\s*\\r?\\n\\s*");
-        for (String line : lines) {
-            Log.d(TAG, "getListOfProperties: " + line);
-        }
-        return lines;
-    }
-
-    public List getListOfProperties(String[] lines){
-        List<String> list = new ArrayList<>(lines.length);
-        list.addAll(Arrays.asList(lines));
-        return list;
-    }
-
-    private String getImageProperty(ImageProperties imageProperties) {
-        String message = "";
-        DominantColorsAnnotation colors = imageProperties.getDominantColors();
-        for (ColorInfo color : colors.getColors()) {
-            message = message + "" + color.getPixelFraction() + " - " + color.getColor().getRed() + " - " + color.getColor().getGreen() + " - " + color.getColor().getBlue();
-            message = message + "\n";
-//            PictureProperties pictureProperties = new PictureProperties(color.getPixelFraction(),color.getColor().getRed(),color.getColor().getBlue(),color.getColor().getGreen());
-//            picturePropertiesList.add(pictureProperties);
-        }
-        return message;
     }
     private List<PictureProperties> getImagePropertyList(ImageProperties imageProperties) {
         List<PictureProperties> list = new ArrayList<>();
