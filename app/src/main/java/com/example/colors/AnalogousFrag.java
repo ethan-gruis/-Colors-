@@ -17,50 +17,26 @@ import androidx.fragment.app.Fragment;
  * Activities that contain this fragment must implement the
  * {@link AnalogousFrag.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AnalogousFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class AnalogousFrag extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private float redValue;
+    private float greenValue;
+    private float blueValue;
 
-    public AnalogousFrag() {
+    public AnalogousFrag(float redValue, float greenValue, float blueValue) {
         // Required empty public constructor
+        this.redValue = redValue;
+        this.greenValue = greenValue;
+        this.blueValue = blueValue;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MonochromaticFrag.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AnalogousFrag newInstance(String param1, String param2) {
-        AnalogousFrag fragment = new AnalogousFrag();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -74,9 +50,10 @@ public class AnalogousFrag extends Fragment {
         ImageView color3 = (ImageView) rootView.findViewById(R.id.color3);
         ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
 
-        int r = 2;
-        int g = 241;
-        int b = 69;
+        int r = (int)redValue;
+        int g = (int)greenValue;
+        int b = (int)blueValue;
+
         baseImage.setBackgroundColor(Color.rgb(r, g, b));
         float[] baseHSV = new float[3];
         Color.RGBToHSV(r, g, b, baseHSV);
