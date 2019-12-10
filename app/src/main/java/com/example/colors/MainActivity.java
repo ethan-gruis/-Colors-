@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     final String TAG = "MainActivityTag";
@@ -56,6 +58,25 @@ public class MainActivity extends AppCompatActivity {
         ImageView color1 = (ImageView) findViewById(R.id.color1);
         ImageView color2 = (ImageView) findViewById(R.id.color2);
         ImageView color3 = (ImageView) findViewById(R.id.color3);
+
+        Random rand = new Random();
+        int r = rand.nextInt(256 - 1);
+        int g = rand.nextInt(256 - 1);
+        int b = rand.nextInt(256 - 1);
+        color1.setBackgroundColor(Color.rgb(r, g, b));
+        float[] baseHSV = new float[3];
+        Color.RGBToHSV(r, g, b, baseHSV);
+        float[] hsv = baseHSV;
+
+        hsv[2] += .30f;
+        // color 2
+        hsv[1] -= .30f;
+        color2.setBackgroundColor(Color.HSVToColor(hsv));
+        hsv[1] += .30f;
+        // color 3
+        hsv[2] -= .50f;
+        color3.setBackgroundColor(Color.HSVToColor(hsv));
+
 
 
         takePictureButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(homeIntent);
         }
     }
-    
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
