@@ -36,28 +36,28 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="24dp"
         android:text="Welcome to "
         android:textColor="#050505"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/takePictureButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/color1"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.237" />
+        app:layout_constraintVertical_bias="0.32" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="10dp"
         android:text="COLORS"
         android:textColor="#050505"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/takePictureButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.053"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintVertical_bias="0.0" />
@@ -68,34 +68,43 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:text="Take a picture or upload \n a photo to create a color palette"
+        android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/takePictureButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/color1"
-        android:layout_width="164dp"
-        android:layout_height="35dp"
-        app:srcCompat="@android:color/transparent"
-        tools:layout_editor_absoluteX="247dp"
-        tools:layout_editor_absoluteY="130dp" />
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="132dp"
+        app:layout_constraintBottom_toTopOf="@+id/color2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:color/transparent" />
 
     <ImageView
         android:id="@+id/color2"
-        android:layout_width="195dp"
-        android:layout_height="35dp"
-        app:srcCompat="@android:color/transparent"
-        tools:layout_editor_absoluteX="216dp"
-        tools:layout_editor_absoluteY="165dp" />
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/color1"
+        app:srcCompat="@android:color/transparent" />
 
     <ImageView
         android:id="@+id/color3"
-        android:layout_width="234dp"
-        android:layout_height="35dp"
-        app:srcCompat="@android:color/transparent"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="200dp" />
+        android:layout_width="300dp"
+        android:layout_height="54dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/color2"
+        app:srcCompat="@android:color/transparent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
