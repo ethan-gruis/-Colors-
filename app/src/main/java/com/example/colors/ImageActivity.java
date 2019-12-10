@@ -33,6 +33,8 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
     protected ImageView color2;
     protected ImageView color3;
     protected ImageView color4;
+    protected ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_image);
 
         ImageView image = (ImageView) findViewById(R.id.parentImage);
+
         assert getSupportActionBar() != null;   //null check
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -57,7 +60,6 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         color2.setOnClickListener(this);
         color3.setOnClickListener(this);
         color4.setOnClickListener(this);
-
 
         // both options (CAMERA and GALLERY) now pass a URI object
         selectedImage = (Uri) extras.getParcelable("selectedImage");
@@ -89,7 +91,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("Blue Value",pictureProperties.getBlueValue());
         startActivity(intent);
     }
-
+  
     public void receivedPicturePropertiesList(List<PictureProperties> list){
         picturePropertiesList = list;
         String temp = Integer.toString(picturePropertiesList.size());
