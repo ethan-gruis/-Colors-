@@ -62,9 +62,9 @@ public class MonochromaticFrag extends Fragment {
         ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
 
 
-        int r = 2;
-        int g = 241;
-        int b = 69;
+        int r = (int)redValue;
+        int g = (int)greenValue;
+        int b = (int)blueValue;
       
         float[] hsv = new float[3];
 
