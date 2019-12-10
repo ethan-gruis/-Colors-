@@ -23,6 +23,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button takePictureButton = (Button) findViewById(R.id.takePictureButton);
         Button uploadImageButton = (Button) findViewById(R.id.chooseImageButton);
+        ImageView color1 = (ImageView) findViewById(R.id.color1);
+        ImageView color2 = (ImageView) findViewById(R.id.color2);
+        ImageView color3 = (ImageView) findViewById(R.id.color3);
 
 
         takePictureButton.setOnClickListener(new View.OnClickListener() {
@@ -81,18 +85,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(homeIntent);
         }
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Button tabButton = (Button) findViewById(R.id.takePictureButton);
-//        if (checkPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-//            tabButton.setVisibility(View.VISIBLE);
-//        } else {
-//            tabButton.setVisibility(View.INVISIBLE);
-//            makeRequest(Manifest.permission.CAMERA);
-//        }
-//    }
+    
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
