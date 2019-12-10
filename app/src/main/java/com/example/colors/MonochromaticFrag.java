@@ -1,6 +1,5 @@
 package com.example.colors;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,7 +53,7 @@ public class MonochromaticFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_monochromatic, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_palette, container, false);
 
         ImageView baseImage = (ImageView) rootView.findViewById(R.id.colorBase);
         ImageView color1 = (ImageView) rootView.findViewById(R.id.color);
@@ -62,16 +61,16 @@ public class MonochromaticFrag extends Fragment {
         ImageView color3 = (ImageView) rootView.findViewById(R.id.color3);
         ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
 
-        final int r = (int)redValue;
-        final int g = (int)greenValue;
-        final int b = (int)blueValue;
+
+        int r = 2;
+        int g = 241;
+        int b = 69;
+      
         float[] hsv = new float[3];
 
         Color.RGBToHSV(r, g, b, hsv);
         baseImage.setBackgroundColor(Color.HSVToColor(hsv));
 //        float[] hsv = new float[3];
-
-
 
        // Toast.makeText(getContext(), baseHSV[0] + "," + baseHSV[1] + "," + baseHSV[2], Toast.LENGTH_LONG).show();
          //hsv[0] == hue, hsv[1] == saturation, hsv[2] == value
@@ -101,7 +100,7 @@ public class MonochromaticFrag extends Fragment {
             // color 1
             hsv[2] -= .30f;
             color1.setBackgroundColor(Color.HSVToColor(hsv));
-            Toast.makeText(getContext(), "Color 1: " + r + "," + g + "," + b, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getContext(), "Color 1: " + r + "," + g + "," + b, Toast.LENGTH_LONG).show();
             hsv[2] += .30f;
             // color 2
             hsv[1] -= .30f;

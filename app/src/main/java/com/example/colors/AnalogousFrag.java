@@ -66,7 +66,7 @@ public class AnalogousFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_analogous, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_palette, container, false);
 
         ImageView baseImage = (ImageView) rootView.findViewById(R.id.colorBase);
         ImageView color1 = (ImageView) rootView.findViewById(R.id.color);
@@ -74,9 +74,9 @@ public class AnalogousFrag extends Fragment {
         ImageView color3 = (ImageView) rootView.findViewById(R.id.color3);
         ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
 
-        int r = 150;
-        int g = 100;
-        int b = 40;
+        int r = 2;
+        int g = 241;
+        int b = 69;
         baseImage.setBackgroundColor(Color.rgb(r, g, b));
         float[] baseHSV = new float[3];
         Color.RGBToHSV(r, g, b, baseHSV);

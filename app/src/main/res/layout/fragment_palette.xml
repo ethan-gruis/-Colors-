@@ -1,31 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.palette.PlaceholderFragment">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        android:text="Your Palette:"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/colorBase"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:contentDescription="sample"
-        app:layout_constraintBottom_toTopOf="@+id/section_label"
+        android:layout_height="160dp"
+        android:layout_marginTop="50dp"
+        android:src="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/color2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@tools:sample/avatars" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/color2"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:src="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorBase" />
+
+    <ImageView
+        android:id="@+id/color"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:src="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/color3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/color2" />
+
+    <ImageView
+        android:id="@+id/color3"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:src="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/color4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/color" />
+
+    <ImageView
+        android:id="@+id/color4"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:src="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/color3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
