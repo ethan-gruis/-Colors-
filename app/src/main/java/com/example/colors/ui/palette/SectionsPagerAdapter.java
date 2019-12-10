@@ -45,10 +45,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = new MonochromaticFrag(redValue,greenValue,blueValue);
                 break;
             case 1:
-                fragment = new TriadicFrag();
+                fragment = new TriadicFrag(redValue,greenValue,blueValue);
                 break;
             case 2:
-                fragment = new AnalogousFrag();
+                fragment = new AnalogousFrag(redValue,greenValue,blueValue);
                 break;
         }
         return fragment;

@@ -48,8 +48,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         color3.setOnClickListener(this);
         color4.setOnClickListener(this);
 
-//        String entry = extras.getString("typeOfEntry");
-//        Toast.makeText(this, entry, Toast.LENGTH_SHORT).show();
+
 
         // both options (CAMERA and GALLERY) now pass a URI object
         selectedImage = (Uri) extras.getParcelable("selectedImage");
