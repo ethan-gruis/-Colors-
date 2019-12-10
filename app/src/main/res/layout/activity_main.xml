@@ -10,29 +10,36 @@
         android:id="@+id/takePictureButton"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:backgroundTint="@color/colorPrimary"
         android:scaleType="fitCenter"
         android:src="@android:drawable/ic_menu_camera"
         android:text="Take a Picture"
+        android:textColor="#FFFCFC"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.8" />
+        app:layout_constraintVertical_bias="0.864" />
 
     <Button
         android:id="@+id/chooseImageButton"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
+        android:backgroundTint="@color/colorPrimary"
         android:text="upload an image"
+        android:textColor="#FFFCFC"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/takePictureButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView2"
@@ -47,24 +54,23 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.338" />
+        app:layout_constraintVertical_bias="0.312" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="COLORS"
         android:textColor="#050505"
-        android:textSize="50sp"
+        android:textSize="55sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/takePictureButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.449" />
+        app:layout_constraintVertical_bias="0.413" />
 
     <TextView
         android:id="@+id/textView4"
