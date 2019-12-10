@@ -56,20 +56,6 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         image.setImageURI(selectedImage);
         VisionAPIHandler visionAPIHandler = new VisionAPIHandler(this);
         visionAPIHandler.callVisionAPI(selectedImage);
-//        switch(entry) {
-//            case "CAMERA":
-//                Bitmap bitmap = (Bitmap) extras.getParcelable("bitmap");
-//                image.setImageBitmap(bitmap);
-//                break;
-//            case "GALLERY":
-//                Uri selectedImage = (Uri) extras.getParcelable("selectedImage");
-//                image.setImageURI(selectedImage);
-//                break;
-//            default:
-//                Toast.makeText(this, "ERROR: Image not loaded", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
-
     }
 
     @Override
@@ -99,19 +85,24 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         }
 
         // Set imageView to colors
-        final int r = (int)picturePropertiesList.get(0).getRedValue();
-        final int g = (int)picturePropertiesList.get(0).getGreenValue();
-        final int b = (int)picturePropertiesList.get(0).getBlueValue();
-        float[] hsv = new float[3];
-        Color.RGBToHSV(r, g, b, hsv);
-        color1.setBackgroundColor(Color.HSVToColor(hsv));
+        color1.setBackgroundColor(Color.HSVToColor(convertRGBtoHSV(picturePropertiesList.get(0))));
         color1.setTag(picturePropertiesList.get(0));
-
-        color2.setBackgroundColor(Color.rgb(list.get(1).getRedValue(),list.get(1).getGreenValue(),list.get(1).getBlueValue()));
+        color2.setBackgroundColor(Color.HSVToColor(convertRGBtoHSV(picturePropertiesList.get(1))));
         color2.setTag(picturePropertiesList.get(1));
-        color3.setBackgroundColor(Color.rgb(list.get(2).getRedValue(),list.get(2).getGreenValue(),list.get(2).getBlueValue()));
+        color3.setBackgroundColor(Color.HSVToColor(convertRGBtoHSV(picturePropertiesList.get(2))));
         color3.setTag(picturePropertiesList.get(2));
-        color4.setBackgroundColor(Color.rgb(list.get(3).getRedValue(),list.get(3).getGreenValue(),list.get(3).getBlueValue()));
+        color4.setBackgroundColor(Color.HSVToColor(convertRGBtoHSV(picturePropertiesList.get(3))));
         color4.setTag(picturePropertiesList.get(3));
+
+    }
+    public float[] convertRGBtoHSV(PictureProperties pictureProperties){
+        float[] hsv = new float[3];
+
+        final int r = (int)pictureProperties.getRedValue();
+        final int g = (int)pictureProperties.getGreenValue();
+        final int b = (int)pictureProperties.getBlueValue();
+        Color.RGBToHSV(r, g, b, hsv);
+
+        return hsv;
     }
 }

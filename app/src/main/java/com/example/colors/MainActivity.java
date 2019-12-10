@@ -8,6 +8,7 @@
 package com.example.colors;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RECORD_REQUEST_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     public static final int PICK_IMAGE = 103;
+    static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
     private Bitmap bitmap;
     protected String imageFilePath;
     private static final int REQUEST_CAPTURE_IMAGE = 100;
@@ -91,10 +93,19 @@ public class MainActivity extends AppCompatActivity {
         uploadImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                    // Permission is not granted
+                    //request the permission
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                } else {
+                    // Permission has already been granted
+                    pickFromGallery();
+                }
             }
         });
 
@@ -107,6 +118,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pickFromGallery();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -120,27 +149,28 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 }
-                case PICK_IMAGE: {
-//                    Uri selectedImage = data.getData();
-//                    Intent intent = new Intent(MainActivity.this, ImageActivity.class);
-//                    intent.putExtra("selectedImage", selectedImage);
-//                    intent.putExtra("typeOfEntry", "GALLERY");
-//                    startActivity(intent);
-                    try {
-                                Uri selectedImageUri = data.getData();
-                                // Get the path from the Uri
-                                final String path = getPathFromURI(selectedImageUri);
-                                if (path != null) {
-                                    File f = new File(path);
-                                    selectedImageUri = Uri.fromFile(f);
-                                }
-                                Log.d(TAG,path);
-                                // Set the image in ImageView
-                    } catch (Exception e) {
-                        Log.e("FileSelectorActivity", "File select error", e);
-                    }
+                case PICK_IMAGE:
+                    //data.getData return the content URI for the selected Image
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    // Get the cursor
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    // Move to first row
+                    cursor.moveToFirst();
+                    //Get the column index of MediaStore.Images.Media.DATA
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    //Gets the String value in the column
+                    String imgDecodableString = cursor.getString(columnIndex);
+                    cursor.close();
+                    Log.d(TAG,imgDecodableString);
+
+                    Uri image = Uri.fromFile(new File(imgDecodableString));
+                    Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                    intent.putExtra("selectedImage", image);
+                    intent.putExtra("typeOfEntry", "GALLERY");
+                    startActivity(intent);
+
                     break;
-                }
             }
         }
     }
@@ -194,16 +224,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    public String getPathFromURI(Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
+    private void pickFromGallery() {
+        //Create an Intent with action as ACTION_PICK
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent, PICK_IMAGE);
     }
 }
+
 
