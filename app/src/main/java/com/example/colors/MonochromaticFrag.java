@@ -289,9 +289,7 @@ public class MonochromaticFrag extends Fragment {
             baseHex.setTextColor(Color.WHITE);
         }
         baseHex.setText(baseHexText);
-        int[] rgb = {0, 0, 0, 0};
         baseImage.setBackgroundColor(Color.HSVToColor(hsv));
-        boolean[] setTextWhite = {false, false, false, false};
         int option = 0;
 
         if(hsv[1] <= .70 && hsv[2] <= .50) {
