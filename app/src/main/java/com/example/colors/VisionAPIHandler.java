@@ -180,7 +180,7 @@ public class VisionAPIHandler  {
         List<PictureProperties> list = new ArrayList<>();
         DominantColorsAnnotation colors = imageProperties.getDominantColors();
         for (ColorInfo color : colors.getColors()) {
-            PictureProperties pictureProperties = new PictureProperties(color.getPixelFraction(),color.getColor().getRed(),color.getColor().getBlue(),color.getColor().getGreen());
+            PictureProperties pictureProperties = new PictureProperties(color.getPixelFraction(),color.getColor().getRed(),color.getColor().getGreen(),color.getColor().getBlue());
             //Log.d(TAG, pictureProperties.toString());
             if(pictureProperties!=null) {
                 list.add(pictureProperties);

@@ -18,10 +18,13 @@ public class PaletteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palette);
 
-//        Bundle extras = getIntent().getExtras();
-//        Uri selectedImage = (Uri) extras.getParcelable("selectedImage");
+        Bundle extras = getIntent().getExtras();
+        float redValue = extras.getFloat("Red Value");
+        float greenValue = extras.getFloat("Green Value");
+        float blueValue = extras.getFloat("Blue Value");
 
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(),redValue,greenValue,blueValue);
         //sectionsPagerAdapter.setUri(selectedImage);
 
         ViewPager viewPager = findViewById(R.id.view_pager);
