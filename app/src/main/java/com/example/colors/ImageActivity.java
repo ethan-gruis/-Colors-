@@ -7,6 +7,8 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -14,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Collection;
@@ -29,16 +33,16 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
     protected ImageView color2;
     protected ImageView color3;
     protected ImageView color4;
-    protected ProgressBar progressBar;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         setContentView(R.layout.activity_image);
+
         ImageView image = (ImageView) findViewById(R.id.parentImage);
+        assert getSupportActionBar() != null;   //null check
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         color1 = (ImageView) findViewById(R.id.colorImage1);
         color2 = (ImageView) findViewById(R.id.colorImage2);
@@ -55,13 +59,25 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         color4.setOnClickListener(this);
 
 
-
         // both options (CAMERA and GALLERY) now pass a URI object
         selectedImage = (Uri) extras.getParcelable("selectedImage");
         image.setImageURI(selectedImage);
         VisionAPIHandler visionAPIHandler = new VisionAPIHandler(this);
         visionAPIHandler.callVisionAPI(selectedImage);
     }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // get a reference to the MenuInflater
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.image_menu,menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
 
     @Override
     public void onClick(View v) {
@@ -73,6 +89,7 @@ public class ImageActivity extends AppCompatActivity implements View.OnClickList
         intent.putExtra("Blue Value",pictureProperties.getBlueValue());
         startActivity(intent);
     }
+
     public void receivedPicturePropertiesList(List<PictureProperties> list){
         picturePropertiesList = list;
         String temp = Integer.toString(picturePropertiesList.size());

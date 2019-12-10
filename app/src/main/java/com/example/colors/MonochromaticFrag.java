@@ -1,16 +1,25 @@
 package com.example.colors;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Toolbar;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 
 /**
@@ -49,6 +58,7 @@ public class MonochromaticFrag extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,7 +71,14 @@ public class MonochromaticFrag extends Fragment {
         ImageView color3 = (ImageView) rootView.findViewById(R.id.color3);
         ImageView color4 = (ImageView) rootView.findViewById(R.id.color4);
 
-
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),MainActivity.class);
+                startActivity(intent);
+                }
+        });
         int r = (int)redValue;
         int g = (int)greenValue;
         int b = (int)blueValue;
@@ -149,6 +166,7 @@ public class MonochromaticFrag extends Fragment {
             color4.setBackgroundColor(Color.HSVToColor(Color.rgb(r, g, b), hsv));
         }
         return rootView;
+
     }
 
 //    // TODO: Rename method, update argument and hook method into UI event
