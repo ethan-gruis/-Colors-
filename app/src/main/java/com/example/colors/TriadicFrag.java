@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Random;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,6 +104,15 @@ public class TriadicFrag extends Fragment {
         color4.setBackgroundColor(Color.HSVToColor(hsv));
         setTextViews(rootView, color1HexText, color2HexText, color3HexText, color4HexText, setTextWhite);
         return rootView;
+    }
+    
+    //TODO fix this
+    public int alterColor(int r, int g, int b) {
+        Random rand = new Random();
+        float[] hsv = new float[3];
+        Color.RGBToHSV(r, g, b, hsv);
+
+        return 0;
     }
 
     public void createFab(View rootView) {
