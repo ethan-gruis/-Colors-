@@ -57,8 +57,6 @@ public class MonochromaticFrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
 
@@ -82,11 +80,8 @@ public class MonochromaticFrag extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-//set icon
                         .setIcon(android.R.drawable.ic_dialog_alert)
-//set title
                         .setTitle("Are you sure to Exit")
-//set message
                         .setMessage("Exiting will bring you back to home")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override

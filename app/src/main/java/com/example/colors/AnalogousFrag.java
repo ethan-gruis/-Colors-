@@ -74,34 +74,29 @@ public class AnalogousFrag extends Fragment {
         float[] hsv = baseHSV;
         int[] rgb = new int[4];
         boolean[] setTextWhite = {false, false, false, false};
-        int x = 1;
-        if (hsv[0] <= 280) {
-            x = 1;
-        } else {
-            x = -1;
-        }
-        hsv[0] += (20*x);
+
+        hsv[0] += (20);
         rgb = getRGB(hsv);
         if(rgb[3] == 1) {
             setTextWhite[0] = true;
         }
         String color1HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
         color1.setBackgroundColor(Color.HSVToColor(hsv));
-        hsv[0] += (20*x);
+        hsv[0] += (20);
         rgb = getRGB(hsv);
         if(rgb[3] == 1) {
             setTextWhite[1] = true;
         }
         String color2HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
         color2.setBackgroundColor(Color.HSVToColor(hsv));
-        hsv[0] += (20*x);
+        hsv[0] -= (40);
         rgb = getRGB(hsv);
         if(rgb[3] == 1) {
             setTextWhite[2] = true;
         }
         String color3HexText = String.format("#%02X%02X%02X", rgb[0], rgb[1], rgb[2]);
         color3.setBackgroundColor(Color.HSVToColor(hsv));
-        hsv[0] += (20*x);
+        hsv[0] -= (40);
         rgb = getRGB(hsv);
         if(rgb[3] == 1) {
             setTextWhite[3] = true;
