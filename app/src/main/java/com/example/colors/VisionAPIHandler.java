@@ -51,7 +51,7 @@ import java.util.List;
 
 public class VisionAPIHandler  {
     // wrapper class for all of our flickr API related members
-    private static final String CLOUD_VISION_API_KEY = "AIzaSyDmfCtWQSrC7z8RPGARSwgvcdxSQ-SmS44";
+    private static final String CLOUD_VISION_API_KEY = "";
     static final String TAG = "VisionAPI";
     private List<AnnotateImageRequest> annotateImageRequests;
     public List<String> propertiesList;
